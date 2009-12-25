@@ -3,14 +3,9 @@
 
 import os, sys
 from output import mprint
+from settings import *
 
 
-cwd = os.getcwd()
-fol = ".inv"
-fol_invobjects 	= os.path.join(fol,"invobjects")
-fil_list		= os.path.join(fol,"listfile")
-fil_log			= os.path.join(fol,"log")
-fil_cur			= os.path.join(fol,"current")
 
 def init(args):
 	print(args)

@@ -16,6 +16,7 @@
 import os, getopt, sys
 from init import init
 from new import new
+from create import create
 #from edit import edit
 from output import printhelp 
 from output import mprint 
@@ -63,6 +64,9 @@ for i in args:
 	# function to edit the current inv
 	if i == "edit":
 		edit()
+		sys.exit(0)
+	if i == "create":
+		create()
 		sys.exit(0)
 	else:
 		mprint(fname,1,"Invalid Action. Exiting ...")

@@ -7,33 +7,39 @@
 
 import os, sys, getopt
 from output import mprint
-import settings
+from settings import *
 
 
-fol = ".inv"
-fol_invobjects 	= os.path.join(fol,"invobjects")
-fil_list		= os.path.join(fol,"listfile")
-fil_log			= os.path.join(fol,"log")
-fil_cur			= os.path.join(fol,"current")
 
 
 def new(args):
-	print(len(args))
 	fkt = "new.new"
 	
 	# parse options
 	try:
-		opts, args = getopt.getopt(args, "h", ["help"])
+		opts, args = getopt.getopt(args, "hd", ["help"])
 	except getopt.GetoptError as err:
 		print(err) # will print something like "option -a not recognized"
 		sys.exit(2)
-	print(len(args))
+
+	for o,a in opts:
+			if o == "-d":
+					writedefaults = True
+			else:
+					print("Undefined Arg or Option: "+ o)
+					sys.exit(2)
+
 	if len(args) != 1:
 			mprint(fkt,1,"Exactly one argument required. bye ...")
 			sys.exit(4)
 	else:
 			i_id = args[0]
 	
+	# check whether a folder with the given id exists
+	if os.path.exists(os.path.join(fol_invobjects,i_id)) == True:
+			mprint(fkt,1,"Invoice Id exists. Exiting ...")
+			sys.exit(4)
+
 	# check whether a .inv folder exits:
 	if os.path.exists(fol) == False:
 			mprint(fkt,1,"No Repo exits. bye ...")
@@ -46,9 +52,20 @@ def new(args):
 	os.mkdir(fol_instanz)
 	
 	# Create invoice data files
-	for i in settings.invdata:
+	for i in invdata:
 		os.mknod(os.path.join(fol_instanz,i[0]))
+	
+	# feed the files with the hardcoded defaults
+	if writedefaults == True:
+		for i in invdata:
+			f = open(os.path.join(fol_instanz,i[0]), "w")
+			f.write(str(i[1]))
+			f.close
 
+	# Set the current id
+	f = open(fil_cur, "w")
+	f.write(i_id)
+	f.close()
 
 	# make a initial log entry
 	# todo
