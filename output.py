@@ -2,6 +2,8 @@
 
 def printhelp():
 		print("\n This is the Help vor \"inv\":\n")
+		print(" Actions:")
+		print("    init : Create an empty invoice repository")
 
 
 

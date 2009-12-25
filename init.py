@@ -10,8 +10,10 @@ fol = ".inv"
 fol_invobjects 	= os.path.join(fol,"invobjects")
 fil_list		= os.path.join(fol,"listfile")
 fil_log			= os.path.join(fol,"log")
+fil_cur			= os.path.join(fol,"current")
 
-def init():
+def init(args):
+	print(args)
 	fkt = "init.init"
 
 	# check whether a .inv folder exits:
@@ -27,6 +29,7 @@ def init():
 	os.mkdir(fol_invobjects)
 	os.mknod(fil_list)
 	os.mknod(fil_log)
+	os.mknod(fil_cur)
 
 	# make a initial log entry
 	# todo

@@ -15,6 +15,8 @@
 # Imports {{{
 import os, getopt, sys
 from init import init
+from new import new
+#from edit import edit
 from output import printhelp 
 from output import mprint 
 # }}}
@@ -25,17 +27,21 @@ cwd = os.getcwd()
 
 fname = "main"
 argc = len(sys.argv)
+argv = sys.argv 
 
 # Parse the arguments
-
+# try to feed the parser
 try:
-	opts, args = getopt.getopt(sys.argv[1:], "h", ["help"])
+	opts, args = getopt.getopt(argv[1:], "h", ["help"])
 except getopt.GetoptError as err:
-# print help information and exit:
 	print(err) # will print something like "option -a not recognized"
 	sys.exit(2)
-output = None
-verbose = False
+
+# we need a counter for passing additional 
+# args to the functions
+shift = 2
+
+# loop for option-handling
 for o, a in opts:
 	if o in ("-h","--help"):
 		printhelp()
@@ -44,12 +50,19 @@ for o, a in opts:
 		print("Undefined Arg or Option: "+ o)
 		sys.exit(2)
 
+# loop for argument-handling
 for i in args:
+	# Init function
 	if i == "init":
-		init()
+		init(argv[shift:])
 		sys.exit(0)
-	if i == "create":
-		create()
+	# function to create a new empty inv-obj
+	if i == "new":
+		new(argv[shift:])
+		sys.exit(0)
+	# function to edit the current inv
+	if i == "edit":
+		edit()
 		sys.exit(0)
 	else:
 		mprint(fname,1,"Invalid Action. Exiting ...")
