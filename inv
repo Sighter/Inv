@@ -17,7 +17,8 @@ import os, getopt, sys
 from init import init
 from new import new
 from create import create
-#from edit import edit
+from show import show
+from edit import edit
 from output import printhelp 
 from output import mprint 
 # }}}
@@ -45,7 +46,7 @@ shift = 2
 # loop for option-handling
 for o, a in opts:
 	if o in ("-h","--help"):
-		printhelp()
+		printhelp(fname)
 		sys.exit(0)
 	else:
 		print("Undefined Arg or Option: "+ o)
@@ -63,10 +64,16 @@ for i in args:
 		sys.exit(0)
 	# function to edit the current inv
 	if i == "edit":
-		edit()
+		edit(argv[shift:])
 		sys.exit(0)
 	if i == "create":
 		create()
+		sys.exit(0)
+	if i == "show":
+		show(argv[shift:])
+		sys.exit(0)
+	if i == "help":
+		printhelp(fname)
 		sys.exit(0)
 	else:
 		mprint(fname,1,"Invalid Action. Exiting ...")
